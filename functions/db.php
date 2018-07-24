@@ -25,7 +25,7 @@ function confirm($result){
 
      if(!$result){
        
-       die("QUERY FAILED", mysqli_error($con));
+       die('QUERY FAILED : ' .mysqli_error($con));
 
      }
 
