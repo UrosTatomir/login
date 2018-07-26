@@ -18,9 +18,9 @@
 
        $row = fetch_array($result);
 
-       echo $row[ 'id'].'<br>';
-       echo $row[ 'first_name']. ' ';
-       echo $row[ 'last_name'].'<br>';
+       echo $row['id'].'<br>';
+       echo $row['first_name']. ' ';
+       echo $row['last_name'].'<br>';
        echo $row['username'];
 
 	?>
