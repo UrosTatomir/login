@@ -49,6 +49,24 @@ function token_generator(){
 
 }
 
+function validation_errors($error_message){
+
+$error_message = <<<DELIMITER
+       <div class="alert alert-danger alert-dismissible" role="alert">
+		    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		    </button><strong>Warning!</strong> $error_message
+	   </div>   
+DELIMITER;
+
+	        return $error_message;
+
+
+}
+
+
+
+
 /****************validation functions******************/
 
 
@@ -101,20 +119,25 @@ function validate_user_registration(){
 	 	 	  $errors[] = "Your Username cannot be more than {$max} characters";
 	 	 }
 
+	 	 if(strlen($email) > $max){
+
+	 	 	  $errors[] = "Your email cannot be more than {$max} characters";
+	 	 }
+
+	 	 if($password !== $confirm_password){
+
+	 	 	 $errors[] = "Your password fields do not match";
+
+	 	 }
+
 	 	 if(!empty($errors)){
 
 	 	 	 foreach($errors as $error){
 
-	$message = <<<DELIMITER
+	
+            echo validation_errors($error);
+   
 
-       <div class="alert alert-danger alert-dismissible" role="alert">
-		    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		    <span aria-hidden="true">&times;</span>
-		    </button><strong>Warning!</strong> $error
-	   </div>   
-DELIMITER;
-
-	        echo $message;
        
 	 	 	 }
 	 	 }
