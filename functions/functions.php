@@ -74,6 +74,11 @@ function validate_user_registration(){
 
 	 	 }
 
+	 	 if(strlen($first_name) > $max){
+
+	 	 	  $errors[] = "Your First Name cannot be more than {$max} characters";
+	 	 }
+
 
 	 	 if(strlen($last_name) < $min){
 
@@ -81,12 +86,36 @@ function validate_user_registration(){
 
 	 	 }
 
+	 	 if(strlen($last_name) > $max){
+
+	 	 	  $errors[] = "Your Last Name cannot be more than {$max} characters";
+	 	 }
+
+	 	 if(strlen($username) < $min){
+
+	 	 	  $errors[] = "Your Username cannot be less than {$min} characters";
+	 	 }
+
+	 	 if(strlen($username) > $max){
+
+	 	 	  $errors[] = "Your Username cannot be more than {$max} characters";
+	 	 }
+
 	 	 if(!empty($errors)){
 
 	 	 	 foreach($errors as $error){
 
-	 	 	 	echo $error;
+	$message = <<<DELIMITER
 
+       <div class="alert alert-danger alert-dismissible" role="alert">
+		    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		    </button><strong>Warning!</strong> $error
+	   </div>   
+DELIMITER;
+
+	        echo $message;
+       
 	 	 	 }
 	 	 }
 	 }
