@@ -191,7 +191,11 @@ function validate_user_registration(){
 
 	 	 	if(register_user($first_name, $last_name, $username, $email, $password)){
 
-	 	 		echo "user registred";
+	 	 		set_message("<p class='bg-success text-center'>Please check your email or spam folder for activation link</p>");
+
+	 	 		redirect("index.php");
+
+	 	 		
 	 	 	}
 	 	 }
 
