@@ -61,8 +61,43 @@ DELIMITER;
 
 	        return $error_message;
 
+}
+
+function email_exists($email){
+
+	$sql = "SELECT id FROM users WHERE email = '$email'";
+
+	$result = query($sql);
+
+	if(row_count($result) == 1){
+
+		return true;
+	}else{
+		return false;
+	}
 
 }
+
+function username_exists($username){
+
+	$sql = "SELECT id FROM users WHERE username = '$username'";
+
+	$result = query($sql);
+
+	if(row_count($result) == 1){
+
+		return true;
+
+	}else{
+
+		return false;
+	}
+	
+}
+
+
+
+
 
 
 
@@ -119,9 +154,21 @@ function validate_user_registration(){
 	 	 	  $errors[] = "Your Username cannot be more than {$max} characters";
 	 	 }
 
-	 	 if(strlen($email) > $max){
+	 	 if(username_exists($username)){
 
-	 	 	  $errors[] = "Your email cannot be more than {$max} characters";
+              $errors[] = "Sorry that username  already is taken";
+
+	 	 }
+
+	 	 if(email_exists($email)){
+
+              $errors[] = "Sorry that email already is registered";
+
+	 	 }
+
+	 	 if(strlen($email) < $min){
+
+	 	 	  $errors[] = "Your email cannot be less than {$min} characters";
 	 	 }
 
 	 	 if($password !== $confirm_password){
