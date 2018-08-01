@@ -191,6 +191,7 @@ function validate_user_registration(){
 
        
 	 	 	 }
+
 	 	 }else {
 
 	 	 	if(register_user($first_name, $last_name, $username, $email, $password)){
@@ -282,29 +283,77 @@ function activate_user(){
 
 	          if(row_count($result) == 1){
 
-	          	$sql2 = " UPDATE users SET active = 1, validation_code = 0 WHERE email = '".escape($email)."' AND validation_code ='".escape($validation_code)."' ";
-	          	$result2 = query($sql2);
-	          	confirm($result2);
+		          	$sql2 = " UPDATE users SET active = 1, validation_code = 0 WHERE email = '".escape($email)."' AND validation_code ='".escape($validation_code)."' ";
+		          	$result2 = query($sql2);
+		          	confirm($result2);
 
 
-	             set_message("<p class='bg-success'>Your account has been activated please login</p>");
+		             set_message("<p class='bg-success'>Your account has been activated please login</p>");
 
-	             redirect("login.php");
+		             redirect("login.php");
 
 	     	  } else {
 
-                 set_message("<p class='bg-danger'>Sorry Your account could not be activated</p>");
+	                 set_message("<p class='bg-danger'>Sorry Your account could not be activated</p>");
 
-	             redirect("login.php");
-
+		             redirect("login.php");
 	     	  }
-
-     	}
+     	 }
 
      }
 
 }
 
 
+/****************validate user login functions******************/
+
+
+
+function validate_user_login(){
+
+     $errors = [];
+     $min = 3;
+     $max = 20;
+     
+
+	 if($_SERVER['REQUEST_METHOD'] == "POST"){
+
+
+	   $email    = clean($_POST['email']);
+	   $password = clean($_POST['password']);
+
+
+       if(empty($email)){
+
+          $errors[] = "Email field cannot be empty";
+
+       }
+
+
+       if(empty($password)){
+
+          $errors[] = "Password field cannot be empty";
+
+       }
+
+
+       if(!empty($errors)){
+
+	 	 	 foreach($errors as $error){
+
+	
+            echo (validation_errors($error));
+   
+       
+	 	 	 }
+	 	 	 
+	 	 } else {
+
+            echo "NOT ERRORS";
+
+	     }
+   }
+
+}
 
 ?>

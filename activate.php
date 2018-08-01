@@ -5,7 +5,7 @@
 
 
 	<div class="jumbotron">
-		<?php display_message(); ?>
+		
 		<h1 class="text-center"><?php  activate_user(); ?></h1>
 	</div>
 
