@@ -95,7 +95,11 @@ function username_exists($username){
 	
 }
 
+function send_email($email, $subject, $msg, $headers){
 
+   return mail($email, $subject, $msg, $headers); 
+
+}
 
 
 
@@ -196,12 +200,18 @@ function validate_user_registration(){
 	 	 		redirect("index.php");
 
 	 	 		
+	 	 	} else{
+
+	 	 		set_message("<p class='bg-danger text-center'>Sorry we could not register the user</p>");
+               
+                redirect("index.php");
+
 	 	 	}
 	 	 }
 
 	 }  // POST REQUEST ***********
 
-} //Function***********
+} //********** Register user Function ***********
 
 
 function register_user($first_name,$last_name,$username,$email,$password){
@@ -230,14 +240,71 @@ function register_user($first_name,$last_name,$username,$email,$password){
       	  VALUES ('$first_name','$last_name','$username','$email','$password','$validation_code', 0)";
 
           $result = query($sql);
-
           confirm($result);
+
+          
+          $subject = "Activate Account";
+          $msg = "Please click the link below to activate your Account
+          http://localhost/login/activate.php?email=$email&code=$validation_code";
+
+          $headers = "From: estavela.kotor@gmail.com";
+
+          send_email($email, $subject, $msg, $headers);
+
 
       	  return true;
 
-      }
+
+      } 
+
 
 }
+
+
+//********** Activate user Function ***********
+
+
+function activate_user(){
+
+
+     if($_SERVER['REQUEST_METHOD'] == "GET"){
+
+
+     	if(isset($_GET['email'])){
+
+             $email = clean($_GET['email']);
+
+             $validation_code = clean($_GET['code']);
+
+             $sql = "SELECT id FROM users WHERE email = '".escape($_GET['email'])."' AND validation_code = '".escape($_GET['code'])."' ";
+             $result = query($sql);
+             confirm($result);
+
+	          if(row_count($result) == 1){
+
+	          	$sql2 = " UPDATE users SET active = 1, validation_code = 0 WHERE email = '".escape($email)."' AND validation_code ='".escape($validation_code)."' ";
+	          	$result2 = query($sql2);
+	          	confirm($result2);
+
+
+	             set_message("<p class='bg-success'>Your account has been activated please login</p>");
+
+	             redirect("login.php");
+
+	     	  } else {
+
+                 set_message("<p class='bg-danger'>Sorry Your account could not be activated</p>");
+
+	             redirect("login.php");
+
+	     	  }
+
+     	}
+
+     }
+
+}
+
 
 
 ?>

@@ -5,7 +5,8 @@
 
 
 	<div class="jumbotron">
-		<h1 class="text-center">Activate</h1>
+		<?php display_message(); ?>
+		<h1 class="text-center"><?php  activate_user(); ?></h1>
 	</div>
 
 
