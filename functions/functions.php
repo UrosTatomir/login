@@ -379,9 +379,11 @@ function login_user($email, $password){
 
     	if(md5($password) === $db_password){
 
+           $_SESSION['email'] = $email; 
+
 
     		return true;
-    		
+
     	} else {
 
     		return false;
@@ -402,9 +404,31 @@ function login_user($email, $password){
 
 } // end of functions 
 
+/**************** logged in functions******************/
+
+function logged_in(){
+
+    if(isset($_SESSION['email'])){
+
+
+       return true;
+
+
+    } else {
+
+    	return false;
+    	
+    }
 
 
 
+
+
+
+
+
+
+}
 
 
 
