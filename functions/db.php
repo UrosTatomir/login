@@ -25,6 +25,8 @@ function query($query){
 
      return mysqli_query($con, $query);
 
+     confirm($result);
+
 }
 
 function confirm($result){

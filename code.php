@@ -3,12 +3,14 @@
 
 	<div class="row">
 		<div class="col-lg-6 col-lg-offset-3">	
+
+			<?php  validate_code(); ?>
 		
-			<div class="alert alert-success alert-dismissible" role="alert">
+			<!-- <div class="alert alert-success alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert">
 					<span aria-hidden="true">×</span><span class="sr-only">Close</span>
-				</button>We have a sent a security code to your email <span>@edwin@email.com</span>
-			</div>					
+				</button>We have a sent a security code to your email <span>@edwin@email.com</span> -->
+			<!-- </div>					 -->
 		</div>
 	</div>
 
