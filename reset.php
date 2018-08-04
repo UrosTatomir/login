@@ -1,7 +1,14 @@
 <?php  include("includes/header.php") ?>
 
 	<div class="row">
+		<div class="col-lg-6 col-lg-offset-3">	
 
+            <?php display_message(); ?>
+            
+			<?php password_reset(); ?>
+		
+						
+		</div>
 	</div>
     	<div class="row">
 			<div class="col-md-6 col-md-offset-3">
@@ -29,6 +36,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
+												<input type="hidden" class="hide" name="token" id="token" value="<?php echo token_generator();?>">
 												<input type="submit" name="reset-password-submit" id="reset-password-submit" tabindex="4" class="form-control btn btn-register" value="Reset Password">
 											</div>
 										</div>
