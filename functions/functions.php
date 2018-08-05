@@ -248,7 +248,10 @@ function register_user($first_name,$last_name,$username,$email,$password){
           $msg = "Please click the link below to activate your Account
           http://localhost/login/activate.php?email=$email&code=$validation_code";
 
+          //http://vidime.org/vidime_app/activate.php?email=$email&code=$validation_code";
+
           $headers = "From: vidime@mywebsite.com";
+
 
           send_email($email, $subject, $msg, $headers);
 
@@ -469,6 +472,8 @@ function recover_password(){
 
               Click here to reset your password http://localhost/code.php?email=$email&code=$validation_code
               ";
+              //http://vidime.org/vidime_app/code.php?email=$email&code=$validation_code
+              
 
               $headers = "From  vidime@yourwebsite.com";
 
