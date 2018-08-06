@@ -235,7 +235,7 @@ function register_user($first_name,$last_name,$username,$email,$password){
 
       	  $password = md5($password);
 
-      	  $validation_code = md5($username + microtime());
+      	  $validation_code = md5($username . microtime());
 
       	  $sql = "INSERT INTO users(first_name, last_name, username, email, password, validation_code, active)
       	  VALUES ('$first_name','$last_name','$username','$email','$password','$validation_code', 0)";
@@ -456,7 +456,7 @@ function recover_password(){
 
            if(email_exists($email)){
 
-           	  $validation_code = md5($email+microtime());
+           	  $validation_code = md5($email . microtime());
 
            	  setcookie('temp_access_code',$validation_code, time()+900);
 
@@ -477,14 +477,14 @@ function recover_password(){
 
               $headers = "From  vidime@yourwebsite.com";
 
-              if(!send_email($email, $subject, $message, $headers)){
+              send_email($email, $subject, $message, $headers);
 
 
-              } else{
+              
 
-                 echo validation_errors("Email could not be sent");
+                 // echo validation_errors("Email could not be sent");
 
-              }
+              
 
                 set_message("<p class='bg-success text-center'>Please check your email or spam folder for a password reset code</p>");
 
@@ -613,6 +613,10 @@ function password_reset() {
 
                        redirect("login.php");
 
+
+                      } else {
+                    
+                        echo validation_errors("Password fields don't match");
 
                       }  
 

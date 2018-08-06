@@ -1,7 +1,7 @@
 <?php
 
 $con = mysqli_connect('localhost','root','','login_db');
-
+//change localhost,root,password
 
 function row_count($result){
 
