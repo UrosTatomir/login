@@ -5,23 +5,36 @@
 
 	       redirect("admin.php");
 
-
 	  }
 
 ?>
 
 <?php  include("includes/nav.php") ?>	
-
-	<div class="row">
-		<div class="col-lg-6 col-lg-offset-3">
-
-	      <?php display_message(); ?>
-	      <?php validate_user_login(); ?>
-								
-		</div>
-	</div>
+    
     	<div class="row">
 			<div class="col-md-6 col-md-offset-3">
+				<?php display_message(); ?>
+	            <?php validate_user_login(); ?>
+					 <div class="row-md-center">
+		                 <div class="row justify-content-md-center"> <!--start row tag-->               
+			                   <div class="col col-lg-2">
+			                  
+			                        <a href="#"><img src="images/vidi_me_mini.jpg" class="img-responsive img-circle margin" style="display:inline"  width="150" height="232"/></a>
+			                   </div> 
+
+			                   <div class="col col-lg-2"> <!-- empty col -->
+
+			                   </div> <!-- empty col -->
+			                   
+			                   <div class="col-md-auto">
+			                         
+			                         <h1 class="text-center" style="font-family: Comic Sans MS,cursive, sans-serif; font-size: 90px; color: #BF04C8;">Vidi Me</h1>
+			                         
+			                   </div>                
+	                   
+	                    </div> <!--end row tag-->
+			
+		            </div>
 				<div class="panel panel-login">
 					<div class="panel-heading">
 						<div class="row">

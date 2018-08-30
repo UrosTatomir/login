@@ -5,7 +5,6 @@ session_start();
 include("db.php");
 include("functions.php");
 
-
-echo"database is correct";
+// echo"database is correct {username}";
 
 ?>
