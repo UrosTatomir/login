@@ -5,6 +5,12 @@ session_start();
 include("db.php");
 include("functions.php");
 
-// echo"database is correct {username}";
+//  if(logged_in()){
+
+// $email = $_SESSION['email'];
+
+// echo'Welcome,'.$email;
+
+// }
 
 ?>

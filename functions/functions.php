@@ -1,5 +1,7 @@
 <?php
 
+require'./vendor/autoload.php';
+require'./vendor/phpmailer/phpmailer/src/PHPMailer.php';
 
 /****************helper functions******************/
 
@@ -95,9 +97,42 @@ function username_exists($username){
 	
 }
 
-function send_email($email, $subject, $message, $headers){
+function send_email($email=null, $subject=null, $message=null, $headers=null){
 
-    return mail($email, $subject, $message, $headers); 
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
+
+     //Server settings
+
+    $mail->SMTPDebug = 2;                                
+    $mail->isSMTP();                                     
+    $mail->Host = Config::SMTP_HOST;                               
+    $mail->Username = Config::SMTP_USER;                 
+    $mail->Password = Config::SMTP_PASSWORD;
+    $mail->Port = Config::SMTP_PORT; 
+    $mail->SMTPAuth = true;                          
+    $mail->SMTPSecure = 'tls'; 
+    $mail->isHTML(true);
+    $mail->Charset = 'UTF-8'; 
+    $mail->setFrom('tatomir.uros@gmail.com','Uros Tatomir');
+    $mail->addAddress($email);                     
+     
+
+    //Content                                    
+    $mail->Subject = $subject;
+    $mail->Body    = $message;
+    $mail->AltBody = $message;
+
+    if(!$mail->send()){
+
+     echo 'Message could not be sent.';
+     // echo 'Message has been sent';
+     echo'Mailer Error:'.$mail->ErrorInfo;
+
+    } else {
+         echo'Message has been sent.';
+    }  
+
+    // return mail($email, $subject, $message, $headers); 
 
 }
 
@@ -233,7 +268,8 @@ function register_user($first_name,$last_name,$username,$email,$password){
 
       }  else {
 
-      	  $password = md5($password);
+      	  // $password = md5($password);
+          $password = password_hash($password,PASSWORD_BCRYPT, array('cost'=>12));  
 
       	  $validation_code = md5($username . microtime());
 
@@ -245,15 +281,15 @@ function register_user($first_name,$last_name,$username,$email,$password){
 
           
           $subject = "Activate Account";
-          $msg = "Please click the link below to activate your Account
-          http://localhost/login/activate.php?email=$email&code=$validation_code";
+          $message = "Please click the link below to activate your Account
+          <a href=\"". Config::DEVELOPMENT_URL ."/activate.php?email=$email&code=$validation_code\">LINK HERE</a>";
 
           //http://vidime.org/vidime_app/activate.php?email=$email&code=$validation_code";
 
           $headers = "From: vidime@mywebsite.com";
 
 
-          send_email($email, $subject, $msg, $headers);
+          send_email($email, $subject, $message, $headers);
 
 
       	  return true;
@@ -379,43 +415,30 @@ function login_user($email, $password, $remember){
     $sql ="SELECT password, id FROM users WHERE email ='".escape($email)."' AND active = 1 ";
     $result = query($sql);
 
-    if(row_count($result) == 1) {
+    if(row_count($result) == 1){
 
-    	$row = fetch_array($result);
+    	  $row = fetch_array($result);
 
-    	$db_password = $row['password'];
+    	  $db_password = $row['password'];
 
-    	if(md5($password) === $db_password){
+      	if(password_verify($password, $db_password)){
 
-    		if($remember == "on"){
+          		if($remember =="on"){
 
-    			setcookie('email', $email, time() + 86400);
+          			 setcookie('email', $email, time() + 86400);
 
-    		 }
+          		 }
+                  $_SESSION['email'] = $email; 
 
+          		     return true;
+         }
+//ispred se menja
+        	return true;
 
-           $_SESSION['email'] = $email; 
+     }  else {
 
-
-    		return true;
-
-    	} else {
-
-    		return false;
-    	}
-
-
-    	return true;
-
-    } else {
-
-
-      return false;
-
-
-    }
-
-
+        return false;
+      }
 
 } //  functions 
 
@@ -468,23 +491,18 @@ function recover_password(){
 
 
               $subject = "Please reset your password";
-              $message = "Here is your password reset code {$validation_code}
+              $message = "<h2>Here is your password reset code,click the link below or paste in the browser.</h2><h1>{$validation_code}</h1>
 
-              Click here to reset your password http://localhost/code.php?email=$email&code=$validation_code
-              ";
+              <a href=\"http://localhost/login/code.php?email={$email}&code={$validation_code}\">http://localhost/login/code.php?email=some@{$email}&code={$validation_code}</a>";
               //http://vidime.org/vidime_app/code.php?email=$email&code=$validation_code
               
-
               $headers = "From  vidime@yourwebsite.com";
 
               send_email($email, $subject, $message, $headers);
-
-
-              
+             
 
                  // echo validation_errors("Email could not be sent");
-
-              
+             
 
                 set_message("<p class='bg-success text-center'>Please check your email or spam folder for a password reset code</p>");
 
@@ -492,7 +510,6 @@ function recover_password(){
 
 
            } else {
-
 
              echo validation_errors("This emails does not exist");
 
@@ -604,7 +621,7 @@ function password_reset() {
                         $updated_password = md5($_POST['password']);
 
 
-                        $sql = "UPDATE users SET password = '".escape($updated_password)."',validation_code = 0 WHERE email = '".escape($_GET['email'])."'"; 
+                        $sql = "UPDATE users SET password = '".escape($updated_password)."',validation_code = 0, active=1  WHERE email = '".escape($_GET['email'])."'"; 
 
                           $result = query($sql);
                           confirm($result);
