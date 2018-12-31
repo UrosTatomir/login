@@ -74,7 +74,9 @@ function email_exists($email){
 	if(row_count($result) == 1){
 
 		return true;
+
 	}else{
+    
 		return false;
 	}
 
@@ -110,10 +112,10 @@ function send_email($email=null, $subject=null, $message=null, $headers=null){
     $mail->Password = Config::SMTP_PASSWORD;
     $mail->Port = Config::SMTP_PORT; 
     $mail->SMTPAuth = true;                          
-    $mail->SMTPSecure = 'tls'; 
+    $mail->SMTPSecure = 'tls'; // ssl 
     $mail->isHTML(true);
     $mail->Charset = 'UTF-8'; 
-    $mail->setFrom('tatomir.uros@gmail.com','Uros Tatomir');
+    $mail->setFrom('info@vidime.org','Uros Tatomir');
     $mail->addAddress($email);                     
      
 
@@ -137,10 +139,6 @@ function send_email($email=null, $subject=null, $message=null, $headers=null){
 }
 
 
-
-
-
-
 /****************validation functions******************/
 
 
@@ -153,35 +151,35 @@ function validate_user_registration(){
 
 	 if($_SERVER['REQUEST_METHOD'] == "POST"){
 
-	 	 $first_name        = clean($_POST['first_name']);
-	 	 $last_name         = clean($_POST['last_name']);
+	 	 // $first_name        = clean($_POST['first_name']);
+	 	 // $last_name         = clean($_POST['last_name']);
 	 	 $username          = clean($_POST['username']);
 	 	 $email             = clean($_POST['email']);
 	 	 $password          = clean($_POST['password']);
 	 	 $confirm_password  = clean($_POST['confirm_password']);
 
-	 	 if(strlen($first_name) < $min){
+	 	 // if(strlen($first_name) < $min){
 
-	 	 	  $errors[] = "Your First Name cannot be less than {$min} characters";
+	 	 // 	  $errors[] = "Your First Name cannot be less than {$min} characters";
 
-	 	 }
+	 	 // }
 
-	 	 if(strlen($first_name) > $max){
+	 	 // if(strlen($first_name) > $max){
 
-	 	 	  $errors[] = "Your First Name cannot be more than {$max} characters";
-	 	 }
+	 	 // 	  $errors[] = "Your First Name cannot be more than {$max} characters";
+	 	 // }
 
 
-	 	 if(strlen($last_name) < $min){
+	 	 // if(strlen($last_name) < $min){
 
-	 	 	  $errors[] = "Your Last Name cannot be less than {$min} characters";
+	 	 // 	  $errors[] = "Your Last Name cannot be less than {$min} characters";
 
-	 	 }
+	 	 // }
 
-	 	 if(strlen($last_name) > $max){
+	 	 // if(strlen($last_name) > $max){
 
-	 	 	  $errors[] = "Your Last Name cannot be more than {$max} characters";
-	 	 }
+	 	 // 	  $errors[] = "Your Last Name cannot be more than {$max} characters";
+	 	 // }
 
 	 	 if(strlen($username) < $min){
 
@@ -229,8 +227,8 @@ function validate_user_registration(){
 
 	 	 }else {
 
-	 	 	if(register_user($first_name, $last_name, $username, $email, $password)){
-
+	 	 	// if(register_user($first_name, $last_name, $username, $email, $password)){
+       if(register_user($username, $email, $password)){
 	 	 		set_message("<p class='bg-success text-center'>Please check your email or spam folder for activation link</p>");
 
 	 	 		redirect("index.php");
@@ -250,11 +248,11 @@ function validate_user_registration(){
 } //********** Register user Function ***********
 
 
-function register_user($first_name,$last_name,$username,$email,$password){
-
-      $first_name = escape($first_name);
-      $last_name  = escape($last_name);
-      $username   = escape($username);
+// function register_user($first_name,$last_name,$username,$email,$password){
+function register_user($username,$email,$password){
+      // $first_name = escape($first_name);
+      // $last_name  = escape($last_name);
+      $username   = escape($username); //escapes special characters
       $email      = escape($email);
       $password   = escape($password);
 
@@ -273,8 +271,9 @@ function register_user($first_name,$last_name,$username,$email,$password){
 
       	  $validation_code = md5($username . microtime());
 
-      	  $sql = "INSERT INTO users(first_name, last_name, username, email, password, validation_code, active)
-      	  VALUES ('$first_name','$last_name','$username','$email','$password','$validation_code', 0)";
+          // first_name, last_name -- dont exist;
+      	  $sql = "INSERT INTO users(username, email, password, validation_code, active)
+      	  VALUES ('$username','$email','$password','$validation_code', 0)";
 
           $result = query($sql);
           confirm($result);
@@ -282,21 +281,16 @@ function register_user($first_name,$last_name,$username,$email,$password){
           
           $subject = "Activate Account";
           $message = "Please click the link below to activate your Account
-          <a href=\"". Config::DEVELOPMENT_URL ."/activate.php?email=$email&code=$validation_code\">LINK HERE</a>";
+          <a href=\"". Config::DEVELOPMENT_URL ."/activate.php?email=$email&code=$validation_code\">LINK HERE</a>"; // PRODUCTION_URL
 
           //http://vidime.org/vidime_app/activate.php?email=$email&code=$validation_code";
 
-          $headers = "From: vidime@mywebsite.com";
-
+          $headers = "From: info@vidime.org";
 
           send_email($email, $subject, $message, $headers);
 
-
       	  return true;
-
-
       } 
-
 
 }
 
@@ -391,7 +385,7 @@ function validate_user_login(){
             if(login_user($email, $password, $remember)){
 
 
-               redirect("admin.php");
+               redirect("index.php");
 
 
             } else {
@@ -415,32 +409,30 @@ function login_user($email, $password, $remember){
     $sql ="SELECT password, id FROM users WHERE email ='".escape($email)."' AND active = 1 ";
     $result = query($sql);
 
-    if(row_count($result) == 1){
+    if(row_count($result) == 1){ 
 
     	  $row = fetch_array($result);
 
     	  $db_password = $row['password'];
 
-      	if(password_verify($password, $db_password)){
-
+       // if(password_hash($password,PASSWORD_BCRYPT, array('cost'=>12)) === $db_password){
+      	// if(md5($password) === $db_password){
+         if(password_verify($password, $row['password'])){ 
           		if($remember =="on"){
 
           			 setcookie('email', $email, time() + 86400);
 
           		 }
-                  $_SESSION['email'] = $email; 
+                  $_SESSION['email'] = $email;
 
-          		     return true;
-         }
-//ispred se menja
-        	return true;
+                return true;
+        }else {
 
-     }  else {
-
-        return false;
-      }
-
-} //  functions 
+                return false;
+        }      
+    } 
+    
+}    // end functions 
 
 
 /**************** logged in functions******************/
@@ -487,16 +479,14 @@ function recover_password(){
 
            	  $result = query($sql);
 
-           	 
-
-
               $subject = "Please reset your password";
               $message = "<h2>Here is your password reset code,click the link below or paste in the browser.</h2><h1>{$validation_code}</h1>
 
-              <a href=\"http://localhost/login/code.php?email={$email}&code={$validation_code}\">http://localhost/login/code.php?email=some@{$email}&code={$validation_code}</a>";
+              <a href=\"". Config::DEVELOPMENT_URL ."/code.php?email={$email}&code={$validation_code}\">". Config::DEVELOPMENT_URL ."/code.php?email=some@{$email}&code={$validation_code}</a>";
+              // PRODUCTION_URL
               //http://vidime.org/vidime_app/code.php?email=$email&code=$validation_code
               
-              $headers = "From  vidime@yourwebsite.com";
+              $headers = "From  info@vidime.org";
 
               send_email($email, $subject, $message, $headers);
              
@@ -533,10 +523,6 @@ function recover_password(){
       // token checks 
 
    } // post request
-
-
-
-
 
 
 } //functions
@@ -581,8 +567,7 @@ function validate_code(){
 
                    echo validation_errors("Sorry wrong validation code");
 
-                }
-               
+                }              
 
              }
 
@@ -618,8 +603,10 @@ function password_reset() {
 
 	             	if($_POST['password'] === $_POST['confirm_password']){
 
-                        $updated_password = md5($_POST['password']);
-
+                    
+                 // $updated_password = md5($_POST['password']);
+                  
+                $updated_password = password_hash($_POST['password'],PASSWORD_BCRYPT, array('cost'=>12));
 
                         $sql = "UPDATE users SET password = '".escape($updated_password)."',validation_code = 0, active=1  WHERE email = '".escape($_GET['email'])."'"; 
 
@@ -636,16 +623,10 @@ function password_reset() {
                         echo validation_errors("Password fields don't match");
 
                       }  
-
-
-	             }			     
-			             
-
+	             }			     	             
 			}
 
-
 	    } 
-
 
      } else {
 
@@ -658,13 +639,48 @@ function password_reset() {
 
 }// function
 
+/**************** Checked workshops Functions ******************/
+// function insert_db($email){
 
+//      $email=$_POST['email'];
 
+//      if($_POST['Submit'] =='Submit'){
 
+//          if(email_exist_work()){
+ 
+//           return false;
 
+//       }else{
 
+//         $sql ="INSERT INTO workshop_user(email,work_1,work_2,work_3,work_4,work_5) VALUES('$email',1,0,0,0,0)";
+//         $result = query($sql);
 
+//       }
 
+//      }
+
+       
+      
+//  }
+
+      
+ ///-------
+// function email_exist_work(){
+
+//  $sql = "SELECT id FROM workshop_user WHERE email = '$email'";
+
+//   $result = query($sql);
+
+//   if(row_count($result) == 1){
+
+//     return true;
+//   }else{
+//     return false;
+//   }    
+          
+  
+
+//   }     
 
 
 

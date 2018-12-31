@@ -3,7 +3,7 @@
 require './vendor/autoload.php';
 require './functions/functions.php';
 
-send_email('tatomir.uros@gmail.com','testing UPDATED','SOME MESSAGE'); 	
+send_email('info@vidime.org','testing UPDATED','SOME MESSAGE'); 	
 
 
 ?>

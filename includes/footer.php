@@ -10,7 +10,7 @@
         <!-- Grid row--#21d192>
         <div class="row py-4 d-flex align-items-center">
 
-          <!-- Grid column -->
+          <!- Grid column -->
           <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
             <h6 class="mb-0">Get connected with us on social networks!</h6>
           </div>
@@ -61,7 +61,7 @@
 
           <!-- Content -->
           <h4 class="text-uppercase text-center font-weight-bold">Vidi(See)Me</h4>
-          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <hr class="invisible teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <a href="#"><img src="images/vidi_me_mini.jpg" class="img-responsive img-circle margin" style="display:inline"  width="150" height="232"/></a>
         </div>
         <!-- Grid column uppercase -->
@@ -71,7 +71,7 @@
 
           <!-- Links -->
           <h5 class="text-uppercase font-weight-bold">Products</h5>
-          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <hr class="invisible teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <p>
             <a class="dark-grey-text" href="#!">MDBootstrap</a>
           </p>
@@ -93,7 +93,7 @@
 
           <!-- Links -->
           <h5 class="text-uppercase font-weight-bold">Useful links</h5>
-          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <hr class=" invisible teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
 
           <?php  if(logged_in()): ?>
           <p>
@@ -127,7 +127,7 @@
 
           <!-- Links -->
           <h5 class="text-uppercase font-weight-bold">foto workshop</h5>
-          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <hr class=" invisible teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <a href="#"><img src="images/foto-workshop1.jpg" class="img-thumbnail"  width="150" height="182"/></a>
           
 
@@ -138,7 +138,7 @@
 
           <!-- Links -->
           <h5 class="text-uppercase font-weight-bold">Contact</h5>
-          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <hr class=" invisible teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <p>
             <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fa fa-facebook-square fa-2x social"></i></a></p>
             <p>
@@ -165,7 +165,7 @@
 
     <!-- Copyright -->
     <div class="footer-copyright text-center text-black-50 py-3">© 2018 Copyright:
-      <a class="dark-grey-text" href="https://mdbootstrap.com/bootstrap-tutorial/"> MDBootstrap.com</a>
+      <a class="dark-grey-text" href="https://mdbootstrap.com/bootstrap-tutorial/">Uros Tatomir</a>
     </div>
     <!-- Copyright -->
 

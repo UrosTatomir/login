@@ -3,7 +3,7 @@
 <?php
 	  if(logged_in()) {
 
-	       redirect("admin.php");
+	       redirect("index.php");
 
 	  }
 
