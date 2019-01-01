@@ -1,7 +1,8 @@
 
 <?php  include("includes/header.php") ?>
 
-<?php  include("includes/nav.php")	?> 
+<?php  include("includes/navsr.php")	?>
+ 
 <?php  include_once "functions/db.php" ?>	
 
 	<div class="jumbotron-xl bg-light">
@@ -34,53 +35,7 @@
   
          <div class="container-fluid-xl">
 
-                 <div class="row justify-content-md shadow p-3 mb-5 bg-warning rounded"> <!--start row tag-->
-                       
-                       <div class="col col-lg-2 float-right">
-                      
-                            <a href="index.phtml"><img src="images/vidi_me_mini.jpg" class="img-responsive img-circle margin" style="display:inline"  width="22"/></a>
-                       </div>
-
-                       <div class="col col-lg-10 text-left">
-                           <button type="button"  class="btn btn-outline-info"><a href="projekti.php" class="font-weight-bold" style="font-family: cursive, sans-serif; font-size:16px;color:#2A65CB">PROJEKTI</a></button>
-                            <button type="button" class="btn btn-outline-info"><a href="projekti.php" class="font-weight-bold" style="font-family: cursive, sans-serif; font-size:16px;color:#2A65CB;">SARADNJA</a></button>
-
-                            <button type="button" class="btn btn-outline-info "><a href="workshop.php" class="font-weight-bold"  style="font-family: cursive, sans-serif; font-size:16px;color:#2A65CB;">RADIONICE</a></button>
-
-                            <!-- <button type="button" class="btn btn-success "><a href="predavanja.php" class="btn-success" style="font-family: cursive, sans-serif; font-size:14px;">Lectures</a></button> -->
-                       <!-- </div> -->
-                        <!-- <div class="col col-lg-8 text-right"> -->
-                            <!-- <button type="button" class="btn btn-success "><a href="index.phtml" class="btn-success" style="font-family: cursive, sans-serif; font-size:14px;">Activities</a></button> -->
-                         
-                       <!-- </div>  -->
-                        <!-- <div class="col col-lg-6 text-right"> -->
-                          
-                           <button type="button" class="btn btn-outline-info"  style="font-family: cursive, sans-serif; font-size:16px; color:#2A65CB;"><a href="activities.php" class="font-weight-bold">
-                              AKTIVNOSTI
-                            </a></button>
-                            
-                          
-                          <!-- Split button -->
-                          
-                            <!-- <button type="button" class="btn btn-success "><a href="index.phtml" class="btn-success" style="font-family: cursive, sans-serif; font-size:14px;">Themes</a></button> -->
-                          
-                         
-                       <!-- </div> -->
-                       <!-- <div class="col col-lg-4 text-right"> -->
-                           <!-- <button type="button" class="btn btn-success "><a href="index.phtml" class="btn-success" style="font-family: cursive, sans-serif; font-size:14px;">Training</a></button> --> 
-                         
-                       <!-- </div>  -->
-
-                       <!-- <div class="col col-lg-2 text-right "> -->
-                            <button type="button" class="btn btn-outline-info"><a href="zirafe.php" class="btn-outline-info font-weight-bold" style="font-family: cursive, sans-serif; font-size:16px;color:#2A65CB;">KUTAK ZA ŽIRAFE</a></button>
-                                
-                             
-                       <!-- </div> -->
-                       <!-- <div class="col col-lg-2 text-right"> -->
-                            <button type="button" class="btn btn-outline-info "><a href="onama.php" class="btn-outline-info font-weight-bold" style="font-family: cursive, sans-serif; font-size:16px;color:#2A65CB;">O NAMA</a></button>
-                       </div>
-
-                 </div> <!--end row tag-->
+                  <!--end row tag-->
 
                  <!-- <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;"> -->
 

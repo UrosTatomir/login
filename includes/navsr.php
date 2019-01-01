@@ -33,11 +33,11 @@
               <li><a class="nav-link" href="login.php">Login</a></li>
 
               <?php endif; ?> 
-              <li><a class="nav-link" href="projekti.php">Projects</a></li>
-              <li><a class="nav-link" href="workshop.php">Workshops</a></li>
-              <li><a class="nav-link" href="index.phtml">Activities</a></li>
-              <li><a class="nav-link" href="zirafe.php">Giraff's Corner</a></li>
-              <li><a class="nav-link float-right" href="onama.php">About us</a></li>
+              <li><a class="nav-link" href="projekti.php">Projekti</a></li>
+              <li><a class="nav-link" href="workshop.php">Radionice</a></li>
+              <li><a class="nav-link" href="index.phtml">Aktivnosti</a></li>
+              <li><a class="nav-link" href="zirafe.php">Kutak za Žirafe</a></li>
+              <li><a class="nav-link float-right" href="onama.php">O nama</a></li>
 
             </ul>
             <div class="p-2 float-right">
